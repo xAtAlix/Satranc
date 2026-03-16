@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Notasyon" />
+  <meta name="theme-color" content="#c9a96e" />
+  <title>Satranç Notasyon Tarayıcı</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { height: 100%; }
+    body {
+      min-height: 100%;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      transition: background 0.4s, color 0.4s;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Themes */
+    body.dark  { background: #0a0a0f; color: #e8e0d0; }
+    body.light { background: #f5f0e8; color: #2a2015; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: repeating-linear-gradient(45deg, currentColor 0, currentColor 1px, transparent 0, transparent 50%);
+      background-size: 22px 22px;
+    }
+    body.dark::before  { opacity: 0.025; color: #c9a96e; }
+    body.light::before { opacity: 0.035; color: #8b5e2a; }
+
+    #app { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; padding: 52px 20px 80px; }
+
+    /* Theme toggle */
+    #theme-btn {
+      position: fixed; top: 16px; right: 16px; z-index: 100;
+      border-radius: 24px; padding: 9px 18px; cursor: pointer;
+      display: flex; align-items: center; gap: 7px;
+      font-family: inherit; font-size: 13px; border: 1px solid;
+      transition: all 0.3s;
+    }
+    body.dark  #theme-btn { background: #1a1a22; border-color: #2a2820; color: #9a8e78; }
+    body.light #theme-btn { background: #ede5d8; border-color: #d8cdb8; color: #6b5a3e; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 36px; padding-top: 8px; }
+    .header-icons { font-size: 36px; letter-spacing: 8px; margin-bottom: 12px; }
+    h1 {
+      font-size: clamp(20px, 5.5vw, 32px); font-weight: 400;
+      letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px;
+    }
+    body.dark  h1 { color: #c9a96e; }
+    body.light h1 { color: #8b5e2a; }
+    .subtitle { font-size: 14px; }
+    body.dark  .subtitle { color: #9a8e78; }
+    body.light .subtitle { color: #6b5a3e; }
+    .divider { width: 50px; height: 1px; margin: 14px auto 0; opacity: 0.4; }
+    body.dark  .divider { background: #c9a96e; }
+    body.light .divider { background: #8b5e2a; }
+
+    /* Legend */
+    .legend {
+      border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; border: 1px solid;
+    }
+    body.dark  .legend { background: #0f0f14; border-color: #2a2820; }
+    body.light .legend { background: #fffdf7; border-color: #d8cdb8; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .legend-title {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    body.dark  .legend-title { color: #4a4438; }
+    body.light .legend-title { color: #a89070; }
+    .legend-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px 12px;
+      font-family: 'Courier New', monospace;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .lk { font-weight: bold; font-size: 15px; min-width: 18px; text-align: center; }
+    body.dark  .lk { color: #c9a96e; }
+    body.light .lk { color: #8b5e2a; }
+    .lv { font-size: 12px; }
+    body.dark  .lv { color: #9a8e78; }
+    body.light .lv { color: #6b5a3e; }
+
+    /* Upload */
+    #upload-area { margin-bottom: 20px; }
+    #file-input { display: none; }
+    #upload-btn {
+      width: 100%; padding: 34px 20px; border-radius: 10px; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-family: inherit; border: 2px dashed; transition: all 0.25s; background: transparent;
+    }
+    body.dark  #upload-btn { border-color: #2a2820; }
+    body.light #upload-btn { border-color: #c8b898; background: #ede5d8; }
+    #upload-btn:active { transform: scale(0.98); opacity: 0.8; }
+    .u-icon { font-size: 50px; line-height: 1; }
+    .u-text { font-size: 17px; }
+    body.dark  .u-text { color: #9a8e78; }
+    body.light .u-text { color: #6b5a3e; }
+    .u-sub { font-size: 12px; }
+    body.dark  .u-sub { color: #4a4438; }
+    body.light .u-sub { color: #a89070; }
+
+    /* Preview */
+    #preview-area { margin-bottom: 20px; display: none; }
+    .img-wrap { border-radius: 10px; overflow: hidden; margin-bottom: 14px; position: relative; border: 1px solid; }
+    body.dark  .img-wrap { border-color: #2a2820; }
+    body.light .img-wrap { border-color: #d8cdb8; }
+    #preview-img { width: 100%; max-height: 360px; object-fit: contain; display: block; }
+    body.dark  #preview-img { background: #111; }
+    body.light #preview-img { background: #e8e0d0; }
+
+    #reset-btn {
+      position: absolute; top: 10px; right: 10px;
+      border-radius: 20px; padding: 7px 16px; cursor: pointer;
+      font-size: 13px; font-family: inherit; border: 1px solid;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    body.dark  #reset-btn { background: rgba(0,0,0,0.7); border-color: #3a3428; color: #c9a96e; }
+    body.light #reset-btn { background: rgba(255,255,255,0.88); border-color: #d8cdb8; color: #8b5e2a; }
+
+    /* Analyze btn */
+    #analyze-btn {
+      width: 100%; padding: 20px; border: none; border-radius: 8px;
+      font-size: 17px; letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer; font-family: inherit; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      min-height: 64px; transition: all 0.3s; -webkit-appearance: none;
+    }
+    #analyze-btn:not(:disabled) { background: linear-gradient(135deg, #c9a96e 0%, #a07840 100%); color: #0a0a0f; }
+    body.light #analyze-btn:not(:disabled) { background: linear-gradient(135deg, #8b5e2a 0%, #6b4418 100%); color: #fffdf7; }
+    body.dark  #analyze-btn:disabled { background: #1a1810; color: #5a5040; cursor: not-allowed; }
+    body.light #analyze-btn:disabled { background: #e8e0d0; color: #b0a080; cursor: not-allowed; }
+    #analyze-btn:not(:disabled):active { transform: scale(0.98); }
+
+    .spinner {
+      display: inline-block; width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid; animation: spin 0.8s linear infinite; flex-shrink: 0;
+    }
+    body.dark  .spinner { border-color: #3a3020; border-top-color: #c9a96e; }
+    body.light .spinner { border-color: #d8cdb8; border-top-color: #8b5e2a; }
+
+    /* Error */
+    #error-box {
+      border-radius: 8px; padding: 14px 16px; margin-bottom: 20px;
+      font-size: 14px; line-height: 1.6; display: none; border: 1px solid;
+    }
+    body.dark  #error-box { background: rgba(180,60,60,0.1); border-color: rgba(180,60,60,0.3); color: #e07070; }
+    body.light #error-box { background: rgba(180,60,60,0.07); border-color: rgba(180,60,60,0.25); color: #b03030; }
+
+    /* PGN result */
+    #pgn-result {
+      border-radius: 10px; overflow: hidden; border: 1px solid;
+      display: none; animation: fadeIn 0.4s ease;
+    }
+    body.dark  #pgn-result { border-color: #2a2820; }
+    body.light #pgn-result { border-color: #d8cdb8; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+
+    .pgn-toolbar {
+      padding: 13px 16px; border-bottom: 1px solid;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; flex-wrap: wrap;
+    }
+    body.dark  .pgn-toolbar { background: #0f0f14; border-color: #2a2820; }
+    body.light .pgn-toolbar { background: #fffdf7; border-color: #d8cdb8; }
+    .pgn-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+    body.dark  .pgn-label { color: #c9a96e; }
+    body.light .pgn-label { color: #8b5e2a; }
+    .pgn-actions { display: flex; gap: 8px; }
+
+    .btn-copy, .btn-dl {
+      padding: 9px 16px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; font-family: inherit; min-height: 40px;
+      transition: all 0.2s; border: 1px solid;
+    }
+    body.dark  .btn-copy { background: transparent; border-color: #2a2820; color: #9a8e78; }
+    body.light .btn-copy { background: transparent; border-color: #d8cdb8; color: #6b5a3e; }
+    .btn-copy.ok { color: #78c878 !important; border-color: #78c878 !important; }
+    body.light .btn-copy.ok { color: #3a8a3a !important; border-color: #3a8a3a !important; }
+    body.dark  .btn-dl { background: rgba(201,169,110,0.1); border-color: #c9a96e; color: #c9a96e; }
+    body.light .btn-dl { background: rgba(139,94,42,0.08); border-color: #8b5e2a; color: #8b5e2a; }
+    .btn-copy:active, .btn-dl:active { transform: scale(0.96); }
+
+    #pgn-text {
+      padding: 20px 18px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 15px; line-height: 2.1; white-space: pre-wrap; word-break: break-word;
+    }
+    body.dark  #pgn-text { background: #0c0c10; color: #e8e0d0; }
+    body.light #pgn-text { background: #faf6ee; color: #2a2015; }
+
+    .pgn-enc { padding: 9px 16px; border-top: 1px solid; font-size: 11px; }
+    body.dark  .pgn-enc { background: #0f0f14; border-color: #2a2820; color: #4a4438; }
+    body.light .pgn-enc { background: #fffdf7; border-color: #d8cdb8; color: #a89070; }
+
+    footer { text-align: center; font-size: 11px; margin-top: 44px; letter-spacing: 0.5px; }
+    body.dark  footer { color: #2a2820; }
+    body.light footer { color: #c0ad90; }
+
+    @keyframes spin    { to { transform: rotate(360deg); } }
+    @keyframes fadeIn  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="dark">
+
+<button id="theme-btn" aria-label="Tema değiştir">
+  <span id="t-icon">☀️</span>
+  <span id="t-label">Açık</span>
+</button>
+
+<div id="app">
+
+  <div class="header">
+    <div class="header-icons">♔ ♙ ♖</div>
+    <h1>Notasyon Tarayıcı</h1>
+    <p class="subtitle">Fotoğraf yükle · Türkçe PGN'e dönüştür</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="legend">
+    <p class="legend-title">Taş Harfleri</p>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="lk">Ş</span><span class="lv">Şah ♔</span></div>
+      <div class="legend-item"><span class="lk">V</span><span class="lv">Vezir ♕</span></div>
+      <div class="legend-item"><span class="lk">K</span><span class="lv">Kale ♖</span></div>
+      <div class="legend-item"><span class="lk">F</span><span class="lv">Fil ♗</span></div>
+      <div class="legend-item"><span class="lk">A</span><span class="lv">At ♘</span></div>
+      <div class="legend-item"><span class="lk">—</span><span class="lv">Piyon ♙</span></div>
+    </div>
+  </div>
+
+  <div id="upload-area">
+    <input type="file" id="file-input" accept="image/*" />
+    <button id="upload-btn">
+      <span class="u-icon">📷</span>
+      <span class="u-text">Fotoğraf Seç</span>
+      <span class="u-sub">Galeri veya dosya uygulamasından</span>
+    </button>
+  </div>
+
+  <div id="preview-area">
+    <div class="img-wrap">
+      <img id="preview-img" alt="Notasyon fotoğrafı" />
+      <button id="reset-btn">✕ Değiştir</button>
+    </div>
+    <button id="analyze-btn">♟ Notasyonu Oku</button>
+  </div>
+
+  <div id="error-box" role="alert"></div>
+
+  <div id="pgn-result">
+    <div class="pgn-toolbar">
+      <span class="pgn-label">♔ PGN Çıktısı</span>
+      <div class="pgn-actions">
+        <button class="btn-copy" id="copy-btn">Kopyala</button>
+        <button class="btn-dl"   id="dl-btn">↓ İndir</button>
+      </div>
+    </div>
+    <div id="pgn-text"></div>
+    <div class="pgn-enc">UTF-8 · Ş ş Ğ ğ İ ı Ç ç Ö ö Ü ü desteklenir</div>
+  </div>
+
+  <footer>Chess.com · Lichess · Arena ile uyumlu</footer>
+</div>
+
+<script>
+// ── Prompt ───────────────────────────────────────────────────────────────────
+const PROMPT = `Bu görselde bir satranç notasyonu/skorsheet/notasyon kağıdı var. Tüm hamleleri dikkatli oku ve Türkçe taş harfleri kullanan PGN benzeri formatta çıkar.
+
+Türkçe taş harfleri (MUTLAKA bunları kullan):
+- Ş = Şah (King) — örn: Şe1, Şg1, 0-0
+- V = Vezir (Queen) — örn: Vd1, Vf3
+- K = Kale (Rook) — örn: Ka1, Kf1
+- F = Fil (Bishop) — örn: Fc1, Fb5
+- A = At (Knight) — örn: Af3, Ac3
+- Piyon = harf yok, sadece kare — örn: e4, d5, exd5
+
+Kurallar:
+- Sadece hamleleri yaz, başka hiçbir şey yazma
+- Format: 1. e4 e5 2. Af3 Ac6 3. Fb5 ... şeklinde
+- Rok: 0-0 (kısa) veya 0-0-0 (uzun)
+- Okunamayan hamleler için ? kullan
+- Oyun sonu: 1-0 (beyaz kazandı), 0-1 (siyah kazandı), 1/2-1/2 (berabere) veya * (bilinmiyor)
+- Sadece notasyon metnini döndür, açıklama yapma`;
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let b64 = null, mime = 'image/jpeg', pgn = '';
+
+// ── Theme ─────────────────────────────────────────────────────────────────────
+let dark = true;
+document.getElementById('theme-btn').addEventListener('click', () => {
+  dark = !dark;
+  document.body.className = dark ? 'dark' : 'light';
+  document.getElementById('t-icon').textContent  = dark ? '☀️' : '🌙';
+  document.getElementById('t-label').textContent = dark ? 'Açık' : 'Koyu';
+});
+
+// ── File input ────────────────────────────────────────────────────────────────
+document.getElementById('upload-btn').addEventListener('click', () =>
+  document.getElementById('file-input').click()
+);
+document.getElementById('file-input').addEventListener('change', e =>
+  loadFile(e.target.files[0])
+);
+
+function loadFile(file) {
+  if (!file || !file.type.startsWith('image/')) {
+    return showErr('Lütfen geçerli bir görsel dosyası seçin.');
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    b64  = e.target.result.split(',')[1];
+    mime = file.type || 'image/jpeg';
+    document.getElementById('preview-img').src = e.target.result;
+    show('preview-area'); hide('upload-area'); hide('pgn-result'); hide('error-box');
+    pgn = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── Reset ─────────────────────────────────────────────────────────────────────
+document.getElementById('reset-btn').addEventListener('click', () => {
+  b64 = null; pgn = '';
+  document.getElementById('file-input').value = '';
+  show('upload-area'); hide('preview-area'); hide('pgn-result'); hide('error-box');
+});
+
+// ── Analyze ───────────────────────────────────────────────────────────────────
+document.getElementById('analyze-btn').addEventListener('click', analyze);
+
+async function analyze() {
+  if (!b64) return;
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Analiz ediliyor...';
+  hide('error-box'); hide('pgn-result');
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: [
+          { type: 'image', source: { type: 'base64', media_type: mime, data: b64 } },
+          { type: 'text',  text: PROMPT }
+        ]}]
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    pgn = (data.content?.find(b => b.type === 'text')?.text || '').trim();
+    document.getElementById('pgn-text').textContent = pgn;
+    show('pgn-result');
+  } catch(err) {
+    showErr('Hata: ' + (err.message || 'Bilinmeyen bir hata oluştu.'));
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '♟ Notasyonu Oku';
+  }
+}
+
+// ── Copy ──────────────────────────────────────────────────────────────────────
+document.getElementById('copy-btn').addEventListener('click', () => {
+  navigator.clipboard.writeText(pgn);
+  const b = document.getElementById('copy-btn');
+  b.textContent = '✓ Kopyalandı'; b.classList.add('ok');
+  setTimeout(() => { b.textContent = 'Kopyala'; b.classList.remove('ok'); }, 2000);
+});
+
+// ── Download ──────────────────────────────────────────────────────────────────
+document.getElementById('dl-btn').addEventListener('click', () => {
+  const blob = new Blob(['\uFEFF' + pgn], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href: url, download: 'oyun.pgn' });
+  a.click(); URL.revokeObjectURL(url);
+});
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function show(id) { document.getElementById(id).style.display = 'block'; }
+function hide(id) { document.getElementById(id).style.display = 'none';  }
+function showErr(msg) {
+  const b = document.getElementById('error-box');
+  b.textContent = '⚠️ ' + msg; show('error-box');
+}
+</script>
+</body>
+</html>
