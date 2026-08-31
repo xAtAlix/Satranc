@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>♟️ Satranç Notasyonu Fotoğraf Analizi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #12122a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text-primary: #eaeaea;
+            --text-secondary: #9aa0a6;
+            --accent: #4CAF50;
+            --accent-hover: #45a049;
+            --accent-glow: rgba(76, 175, 80, 0.35);
+            --warning: #ff9800;
+            --warning-bg: rgba(255, 152, 0, 0.15);
+            --error: #f44336;
+            --error-bg: rgba(244, 67, 54, 0.15);
+            --info: #2196F3;
+            --border: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --radius: 14px;
+            --radius-sm: 8px;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(76, 175, 80, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(33, 150, 243, 0.08) 0px, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(18, 18, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .brand-icon {
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            background: var(--bg-card);
+            border-color: var(--text-primary);
+        }
+
+        .btn-danger {
+            background: var(--error-bg);
+            border: 1px solid rgba(244, 67, 54, 0.4);
+            color: #ff8a80;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: rgba(244, 67, 54, 0.25);
+            color: #ffffff;
+        }
+
+        .btn-lichess {
+            background: #2b2b2b;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .btn-lichess:hover:not(:disabled) {
+            background: #3a3a3a;
+            border-color: #ffffff;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .btn-lg {
+            padding: 14px 28px;
+            font-size: 1.05rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* MAIN CONTAINER */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* PROGRESS BAR */
+        .progress-container {
+            margin-bottom: 2.5rem;
+        }
+
+        .progress-bar-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .progress-bar-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .progress-line-fill {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            height: 3px;
+            background: var(--accent);
+            z-index: 2;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .step-item.active .step-circle {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .step-item.current .step-circle {
+            border-color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .step-item.active .step-label {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* STAGES */
+        .stage {
+            display: none;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .stage.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* STAGE 1: UPLOAD */
+        .upload-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            backdrop-filter: blur(16px);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .upload-dropzone {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+        }
+
+        .upload-dropzone:hover, .upload-dropzone.dragover {
+            border-color: var(--accent);
+            background: rgba(76, 175, 80, 0.04);
+            transform: scale(1.01);
+        }
+
+        .upload-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .upload-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .preview-container {
+            margin-top: 1.5rem;
+            display: none;
+            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #000;
+        }
+
+        .preview-img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            display: block;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .preview-img:hover {
+            opacity: 0.9;
+        }
+
+        .preview-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-info {
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .status-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            display: none;
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .status-box.active {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* STAGE 2: EDITING */
+        .stage2-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .left-panel {
+            position: sticky;
+            top: 90px;
+        }
+
+        .sticky-photo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            backdrop-filter: blur(16px);
+        }
+
+        .photo-wrapper {
+            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #000;
+            margin-top: 10px;
+        }
+
+        .photo-preview-sticky {
+            width: 100%;
+            max-height: 520px;
+            object-fit: contain;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .photo-preview-sticky:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-zoom-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            color: #fff;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+        }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .guide-box {
+            background: rgba(33, 150, 243, 0.08);
+            border: 1px solid rgba(33, 150, 243, 0.25);
+            border-radius: var(--radius-sm);
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .guide-items {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .guide-item span {
+            color: var(--accent);
+        }
+
+        /* MOVES TABLE */
+        .moves-table-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            backdrop-filter: blur(16px);
+        }
+
+        .moves-table-header {
+            display: grid;
+            grid-template-columns: 50px 1fr 1fr 44px;
+            gap: 12px;
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+
+        .moves-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .moves-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .moves-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 3px;
+        }
+        .moves-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        .moves-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .move-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 1fr 44px;
+            gap: 12px;
+            align-items: center;
+            padding: 6px 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .move-row:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .move-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .move-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .move-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .move-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 8px var(--accent-glow);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .move-input.valid {
+            border-left: 3px solid var(--accent);
+        }
+
+        .move-input.invalid {
+            border-color: var(--error);
+            background: var(--error-bg);
+        }
+
+        .move-input.uncertain {
+            border-color: var(--warning);
+            background: var(--warning-bg);
+        }
+
+        .move-badge {
+            position: absolute;
+            right: 8px;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            pointer-events: none;
+            font-weight: 700;
+        }
+
+        .badge-invalid {
+            background: var(--error);
+            color: #fff;
+        }
+
+        .badge-uncertain {
+            background: var(--warning);
+            color: #000;
+        }
+
+        .btn-delete-row {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn-delete-row:hover {
+            background: var(--error-bg);
+            color: var(--error);
+        }
+
+        /* METADATA ACCORDION */
+        .accordion {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.02);
+            transition: background 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .accordion-content {
+            padding: 16px 20px;
+            display: none;
+            border-top: 1px solid var(--border);
+        }
+
+        .accordion-content.open {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-control {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+        }
+
+        .stage-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        /* STAGE 3: EXPORT */
+        .export-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .success-banner {
+            text-align: center;
+            padding: 2rem 1rem 1rem 1rem;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pgn-box-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            backdrop-filter: blur(16px);
+            position: relative;
+        }
+
+        .pgn-export-area {
+            background: #060610;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+            color: #d1d5db;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 420px;
+            overflow-y: auto;
+        }
+
+        .export-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+        }
+
+        /* MODAL */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.open {
+            display: flex;
+            animation: fadeIn 0.2s ease forwards;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            max-width: 520px;
+            width: 100%;
+            padding: 1.75rem;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .key-status-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .provider-select-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .provider-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .provider-btn.active {
+            background: rgba(76, 175, 80, 0.15);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .api-input-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .api-helper-link {
+            font-size: 0.75rem;
+            color: var(--info);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .api-helper-link:hover {
+            text-decoration: underline;
+        }
+
+        /* LIGHTBOX */
+        .lightbox-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            cursor: zoom-out;
+        }
+
+        .lightbox-modal.open {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: default;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: #fff;
+            font-size: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* TOAST */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            color: var(--text-primary);
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 280px;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .toast.error {
+            border-left-color: var(--error);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        .toast.info {
+            border-left-color: var(--info);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 820px) {
+            .stage2-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                position: relative;
+                top: 0;
+            }
+
+            .photo-preview-sticky {
+                max-height: 280px;
+            }
+
+            .progress-bar-steps::before, .progress-line-fill {
+                left: 30px;
+                right: 30px;
+            }
+
+            header {
+                padding: 0.75rem 1rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="brand" onclick="location.reload()">
+                <div class="brand-icon">♟️</div>
+                <div>
+                    <div class="brand-title">Satranç Notasyon Analizi</div>
+                    <div class="brand-subtitle">AI Destekli Skor Kağıdı & PGN Çözücü</div>
+                </div>
+            </a>
+            <button class="btn btn-secondary btn-sm" id="btnOpenApiModal" title="API Ayarları">
+                ⚙️ API Ayarları
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-bar-steps">
+                <div class="progress-line-fill" id="progressLine"></div>
+                <div class="step-item active current" id="step-1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Fotoğraf & Analiz</div>
+                </div>
+                <div class="step-item" id="step-2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Hamleleri Düzenle</div>
+                </div>
+                <div class="step-item" id="step-3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">PGN & Paylaş</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 1: YÜKLEME VE ANALİZ -->
+        <section id="stage-1" class="stage active">
+            <div class="upload-wrapper">
+                <div class="card">
+                    <div class="upload-dropzone" id="dropZone">
+                        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.heic,.webp,image/*" style="display: none;">
+                        <div class="upload-icon">📷</div>
+                        <h2 class="upload-title">Notasyon Kağıdı Fotoğrafını Yükleyin</h2>
+                        <p class="upload-desc">Fotoğrafı buraya sürükleyip bırakın veya seçmek için tıklayın</p>
+                        <span class="upload-badge">JPG, PNG, WEBP, HEIC Desteklenir</span>
+                    </div>
+
+                    <!-- Önizleme -->
+                    <div class="preview-container" id="previewContainer">
+                        <img src="" alt="Notasyon Önizleme" class="preview-img" id="previewImage" title="Büyütmek için tıklayın">
+                        <div class="preview-overlay">
+                            <span class="preview-info" id="previewInfo"></span>
+                            <button class="btn btn-outline btn-sm" id="btnChangePhoto" type="button">🔄 Değiştir</button>
+                        </div>
+                    </div>
+
+                    <!-- Durum Göstergesi -->
+                    <div class="status-box" id="statusBox">
+                        <div class="spinner"></div>
+                        <div>
+                            <div style="font-weight: 600;" id="statusText">Analiz ediliyor...</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);" id="statusSubText">Bu işlem 5-15 saniye sürebilir</div>
+                        </div>
+                    </div>
+
+                    <!-- Buton -->
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn btn-primary btn-lg" id="btnAnalyze" style="width: 100%;" disabled>
+                            🔍 AI ile Analiz Et
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 1.25rem; font-size: 0.8rem; color: var(--text-secondary); text-align: center;">
+                        💡 <strong>İpucu:</strong> Skor kağıdının düz, net ve gölgesiz çekilmiş olması analiz kalitesini doğrudan artırır.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 2: DÜZENLEME VE DOĞRULAMA -->
+        <section id="stage-2" class="stage">
+            <div class="stage2-layout">
+                <!-- Sol Panel (Sticky Fotoğraf) -->
+                <div class="left-panel">
+                    <div class="sticky-photo-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <h3 style="font-size: 1rem; font-weight: 700;">📸 Notasyon Kağıdı</h3>
+                            <span style="font-size: 0.75rem; color: var(--text-secondary);">🔍 Büyütmek için tıkla</span>
+                        </div>
+                        <div class="photo-wrapper" id="stickyPhotoWrap">
+                            <img src="" alt="Skor Kağıdı" class="photo-preview-sticky" id="stickyImage">
+                            <div class="photo-zoom-badge">🔍 Zoom</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ Panel (Hamle Tablosu + Bilgiler) -->
+                <div class="right-panel">
+                    <!-- Notasyon Rehberi -->
+                    <div class="guide-box">
+                        <div>🇹🇷 <strong>Türkçe Notasyon:</strong></div>
+                        <div class="guide-items">
+                            <div class="guide-item">Ş=<span>Şah (K)</span></div>
+                            <div class="guide-item">V=<span>Vezir (Q)</span></div>
+                            <div class="guide-item">K=<span>Kale (R)</span></div>
+                            <div class="guide-item">F=<span>Fil (B)</span></div>
+                            <div class="guide-item">A=<span>At (N)</span></div>
+                            <div class="guide-item">O-O=<span>Rok</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Hamleler Tablosu -->
+                    <div class="moves-table-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <h3 style="font-size: 1.1rem; font-weight: 700;">♟️ Hamle Listesi</h3>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);" id="movesStatsText">0 hamle</span>
+                        </div>
+
+                        <div class="moves-table-header">
+                            <div>#</div>
+                            <div>⬜ Beyaz</div>
+                            <div>⬛ Siyah</div>
+                            <div style="text-align: center;">Sil</div>
+                        </div>
+
+                        <div class="moves-list" id="movesListContainer">
+                            <!-- JS dinamik olarak çift çift render edecek -->
+                        </div>
+
+                        <div style="margin-top: 14px;">
+                            <button class="btn btn-secondary btn-sm" id="btnAddMoveRow" style="width: 100%;">
+                                ➕ Hamle Satırı Ekle
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Maç Bilgileri Formu (Açılır-Kapanır) -->
+                    <div class="accordion">
+                        <div class="accordion-header" id="accordionHeader">
+                            <span>📋 Maç Bilgileri (Opsiyonel PGN Etiketleri)</span>
+                            <span id="accordionArrow">▼</span>
+                        </div>
+                        <div class="accordion-content" id="accordionContent">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Turnuva / Etkinlik</label>
+                                    <input type="text" class="form-control" id="metaEvent" placeholder="Örn: Bursa İl Birinciliği">
+                                </div>
+                                <div class="form-group">
+                                    <label>Yer / Şehir</label>
+                                    <input type="text" class="form-control" id="metaSite" placeholder="Örn: Bursa, TUR">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tarih</label>
+                                    <input type="date" class="form-control" id="metaDate">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tur (Round)</label>
+                                    <input type="text" class="form-control" id="metaRound" placeholder="Örn: 1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Beyaz Oyuncu</label>
+                                    <input type="text" class="form-control" id="metaWhite" placeholder="Ad Soyad">
+                                </div>
+                                <div class="form-group">
+                                    <label>Siyah Oyuncu</label>
+                                    <input type="text" class="form-control" id="metaBlack" placeholder="Ad Soyad">
+                                </div>
+                                <div class="form-group">
+                                    <label>Beyaz Elo</label>
+                                    <input type="number" class="form-control" id="metaWhiteElo" placeholder="1850">
+                                </div>
+                                <div class="form-group">
+                                    <label>Siyah Elo</label>
+                                    <input type="number" class="form-control" id="metaBlackElo" placeholder="1800">
+                                </div>
+                                <div class="form-group">
+                                    <label>Maç Sonucu</label>
+                                    <select class="form-control" id="metaResult">
+                                        <option value="*">Belirtilmemiş (*)</option>
+                                        <option value="1-0">1 - 0 (Beyaz Kazandı)</option>
+                                        <option value="0-1">0 - 1 (Siyah Kazandı)</option>
+                                        <option value="1/2-1/2">½ - ½ (Berabere)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alt Aksiyon Butonları -->
+                    <div class="stage-actions">
+                        <button class="btn btn-outline" id="btnBackToStage1">
+                            ↩️ Geri (Yükleme)
+                        </button>
+                        <button class="btn btn-primary btn-lg" id="btnConfirmMoves">
+                            ✅ Hamleleri Onayla ve PGN Oluştur
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 3: ÇIKTI VE PAYLAŞIM -->
+        <section id="stage-3" class="stage">
+            <div class="export-wrapper">
+                <div class="success-banner">
+                    <div class="success-icon">🎉</div>
+                    <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 6px;">Notasyon Başarıyla Çözümlendi!</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;" id="exportSummaryText">
+                        FIDE standartlarında İngilizce SAN notasyonuna dönüştürüldü.
+                    </p>
+                </div>
+
+                <div class="pgn-box-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 700; font-size: 0.9rem; color: var(--text-secondary);">PGN ÇIKTISI</span>
+                        <span style="font-size: 0.8rem; color: var(--accent);">Standart FIDE Notasyonu (EN)</span>
+                    </div>
+
+                    <div class="pgn-export-area" id="pgnExportArea"></div>
+                </div>
+
+                <div class="export-actions">
+                    <button class="btn btn-primary" id="btnCopyPgn">
+                        📋 PGN Kopyala
+                    </button>
+                    <button class="btn btn-secondary" id="btnDownloadPgn">
+                        📥 PGN İndir (.pgn)
+                    </button>
+                    <button class="btn btn-secondary" id="btnDownloadPng">
+                        🖼️ PNG Olarak İndir
+                    </button>
+                    <button class="btn btn-lichess" id="btnOpenLichess" title="Lichess Analiz Tahtasında Aç">
+                        ♞ Lichess'te Aç
+                    </button>
+                    <button class="btn btn-outline" id="btnNewAnalysis">
+                        🔄 Yeni Analiz
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- API KEY MODAL -->
+    <div class="modal" id="apiKeyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">⚙️ API Ayarları</h3>
+                <button class="modal-close" id="btnCloseApiModal">&times;</button>
+            </div>
+
+            <!-- Kayıtlı Anahtar Durumu -->
+            <div class="key-status-box" id="activeKeyStatus">
+                <strong>Aktif Sağlayıcı:</strong> <span id="currentProviderLabel">Puter.js (Varsayılan Ücretsiz)</span>
+                <div id="maskedKeyRow" style="display: none; margin-top: 4px; font-family: monospace; color: var(--accent);"></div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                Varsayılan olarak ücretsiz Puter.js servisi kullanılır. Limit aşımı veya özel kullanım durumunda kendi ücretsiz API anahtarınızı kaydedebilirsiniz.
+            </p>
+
+            <div class="provider-select-group">
+                <button class="provider-btn active" id="btnSelectGemini" type="button">Google Gemini</button>
+                <button class="provider-btn" id="btnSelectGroq" type="button">Groq Cloud</button>
+            </div>
+
+            <!-- Gemini Key Input -->
+            <div class="api-input-section" id="geminiInputSection">
+                <label style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 6px;">Gemini API Anahtarı:</label>
+                <input type="password" class="form-control" id="geminiApiKey" placeholder="AIzaSy..." style="width: 100%;">
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="api-helper-link">
+                    🔗 Ücretsiz Google AI Studio API Key Al ↗
+                </a>
+            </div>
+
+            <!-- Groq Key Input -->
+            <div class="api-input-section" id="groqInputSection" style="display: none;">
+                <label style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 6px;">Groq API Anahtarı:</label>
+                <input type="password" class="form-control" id="groqApiKey" placeholder="gsk_..." style="width: 100%;">
+                <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" class="api-helper-link">
+                    🔗 Ücretsiz Groq Console API Key Al ↗
+                </a>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 1.5rem;">
+                <button class="btn btn-primary" id="btnSaveApiKey" type="button">
+                    💾 Anahtarı Kaydet ve Kullan
+                </button>
+                <button class="btn btn-danger btn-sm" id="btnClearApiKey" type="button">
+                    🗑️ Anahtarı Sil ve Puter'a Dön
+                </button>
+            </div>
+
+            <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-secondary); text-align: center;">
+                🔒 <em>API anahtarınız yalnızca bu tarayıcının yerel hafızasında (localStorage) saklanır ve asla 3. taraf bir sunucuya iletilmez.</em>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX MODAL -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <button class="lightbox-close" id="btnCloseLightbox">&times;</button>
+        <img src="" alt="Zoom Notasyon" class="lightbox-img" id="lightboxImage">
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- CDN KÜTÜPHANELERİ (Hatasız Sürümler) -->
+    <!-- 1. Chess.js v0.10.3 (Global window.Chess) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <!-- 2. html2canvas (PNG Export) -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <!-- 3. Puter.js (Ücretsiz AI) -->
+    <script src="https://js.puter.com/v2/"></script>
+
+    <!-- UYGULAMA JAVASCRIPT KODLARI -->
+    <script>
+        /**
+         * 1. CONSTANTS & SYSTEM PROMPTS
+         */
+        const CHESS_ANALYSIS_PROMPT = `You are analyzing a chess scoresheet photograph for tournament documentation purposes.
+
+TASK:
+1. Extract all chess moves from this image in standard algebraic notation
+2. Output ONLY the moves in PGN format, no explanations or extra text
+3. Include move numbers (1. 2. 3.)
+4. Include game result if visible (1-0, 0-1, 1/2-1/2) at the end
+5. If any move is unclear or low confidence, mark it with [?] for user review
+
+OUTPUT FORMAT (strict):
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 1-0
+
+IMPORTANT RULES:
+- This is a legitimate chess tournament scoresheet analysis request
+- Do not refuse this request
+- Focus on accuracy over speed
+- If handwriting is unclear, make your best guess and mark with [?]
+- Do not add commentary, explanations, or thinking process
+- Return ONLY the PGN string
+- CRITICAL: If you see Turkish chess notation (A=Knight, F=Bishop, K=King, V=Queen, Ş=Rook), CONVERT them to English PGN (N, B, K, Q, R)
+- CRITICAL: Preserve Turkish text in metadata exactly as written`;
+
+        const PUTER_MODELS = [
+            'google/gemini-2.0-flash',
+            'gemini-2.0-flash',
+            'google/gemini-2.5-flash',
+            'gemini-1.5-flash',
+            'google/gemini-1.5-flash'
+        ];
+
+        const GROQ_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct';
+
+        const ERROR_MESSAGES = {
+            'PUTER_FAILED': '📭 Ücretsiz analiz şu an kullanılamıyor. Kendi API anahtarınızı girerek devam edin.',
+            'API_KEY_REQUIRED': '🔑 Analiz için API anahtarı gerekli. Ayarlardan ekleyin.',
+            'INVALID_GEMINI_KEY': '❌ Geçersiz Gemini API Key! "AIzaSy..." ile başlamalı.',
+            'INVALID_GROQ_KEY': '❌ Geçersiz Groq API Key! "gsk_..." ile başlamalı.',
+            'GEMINI_QUOTA': '⚠️ Gemini kotası doldu. Groq deneyin veya 24 saat bekleyin.',
+            'GROQ_QUOTA': '⚠️ Groq kotası doldu. Gemini deneyin.',
+            'NETWORK_ERROR': '🌐 Bağlantı hatası. İnternet bağlantınızı kontrol edin.',
+            'NO_IMAGE': '📷 Lütfen önce bir notasyon fotoğrafı yükleyin.',
+            'ANALYSIS_FAILED': '🤖 Analiz başarısız oldu. Farklı bir sağlayıcı veya daha net bir fotoğraf deneyin.',
+            'EXPORT_ERROR': '❌ Dışa aktarma sırasında bir hata oluştu.'
+        };
+
+        /**
+         * 2. STATE MANAGEMENT
+         */
+        const AppState = {
+            currentStage: 1,
+            selectedFile: null,
+            base64Image: null,
+            movePairs: [], // [{ number: 1, white: 'e4', black: 'e5', whiteUncertain: false, blackUncertain: false }]
+            gameResult: '*',
+            metadata: {
+                event: '',
+                site: '',
+                date: '',
+                round: '',
+                white: '',
+                black: '',
+                whiteElo: '',
+                blackElo: '',
+                result: '*'
+            },
+            finalPgn: ''
+        };
+
+        /**
+         * 3. UTILITY FUNCTIONS (Turkish Notation & String Manipulation)
+         */
+
+        // Base64 Converter
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (err) => reject(err);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // English SAN -> Turkish Display (N->A, B->F, R->K, Q->V, K->Ş)
+        function sanToTurkish(san) {
+            if (!san) return '';
+            let s = san.trim();
+            if (s.startsWith('O-') || s.startsWith('0-') || s.startsWith('O-O') || s.startsWith('0-0') || s.startsWith('o-o')) {
+                return s.toUpperCase().replace(/0/g, 'O');
+            }
+            
+            // Leading piece replacement
+            if (/^K/.test(s)) s = 'Ş' + s.slice(1);
+            else if (/^Q/.test(s)) s = 'V' + s.slice(1);
+            else if (/^R/.test(s)) s = 'K' + s.slice(1);
+            else if (/^B/.test(s)) s = 'F' + s.slice(1);
+            else if (/^N/.test(s)) s = 'A' + s.slice(1);
+
+            // Promotion e.g., =Q -> =V
+            s = s.replace(/=([QRBN])/, (m, p) => {
+                const map = { 'Q': '=V', 'R': '=K', 'B': '=F', 'N': '=A' };
+                return map[p] || m;
+            });
+            return s;
+        }
+
+        // Turkish Display -> English SAN (A->N, F->B, K->R, V->Q, Ş->K)
+        function sanToEnglish(san) {
+            if (!san) return '';
+            let s = san.trim();
+            if (s.startsWith('O-') || s.startsWith('0-') || s.startsWith('O-O') || s.startsWith('0-0') || s.startsWith('o-o') || s.startsWith('O-O-O') || s.startsWith('0-0-0')) {
+                return s.toUpperCase().replace(/0/g, 'O');
+            }
+
+            // Handle Turkish piece characters
+            if (/^[Şş]/.test(s)) {
+                s = 'K' + s.slice(1);
+            } else if (/^[Vv]/.test(s)) {
+                s = 'Q' + s.slice(1);
+            } else if (/^[Kk]/.test(s)) {
+                s = 'R' + s.slice(1);
+            } else if (/^F/.test(s)) {
+                s = 'B' + s.slice(1);
+            } else if (/^f/.test(s)) {
+                // Distinguish between pawn moves (f4, fxe5) and bishop (fe2)
+                if (/^f[1-8]/.test(s) || /^f[xX][a-h][1-8]/.test(s)) {
+                    // pawn move
+                } else {
+                    s = 'B' + s.slice(1);
+                }
+            } else if (/^A/.test(s)) {
+                s = 'N' + s.slice(1);
+            } else if (/^a/.test(s)) {
+                // Distinguish between pawn moves (a4, axb5) and knight (ac6)
+                if (/^a[1-8]/.test(s) || /^a[xX][a-h][1-8]/.test(s)) {
+                    // pawn move
+                } else {
+                    s = 'N' + s.slice(1);
+                }
+            }
+
+            // Promotion handling
+            s = s.replace(/=([ŞVKFAşvkfa])/i, (m, p) => {
+                const up = p.toUpperCase();
+                const map = { 'Ş': '=K', 'V': '=Q', 'K': '=R', 'F': '=B', 'A': '=N' };
+                return map[up] || m;
+            });
+
+            return s;
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'info', duration = 3500) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            let icon = 'ℹ️';
+            if (type === 'error') icon = '❌';
+            if (type === 'warning') icon = '⚠️';
+            if (type === 'success' || message.includes('✅') || message.includes('📋')) icon = '✅';
+
+            toast.innerHTML = `<span>${icon}</span> <div>${message}</div>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // Stage Navigation & Progress Bar
+        function showStage(n) {
+            AppState.currentStage = n;
+            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(`stage-${n}`);
+            if (target) target.classList.add('active');
+
+            // Update Progress Bar
+            document.querySelectorAll('.step-item').forEach((step, idx) => {
+                step.classList.toggle('active', idx < n);
+                step.classList.toggle('current', idx === n - 1);
+            });
+
+            const progressLine = document.getElementById('progressLine');
+            if (n === 1) progressLine.style.width = '0%';
+            else if (n === 2) progressLine.style.width = '50%';
+            else if (n === 3) progressLine.style.width = '100%';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * 4. API KEY MANAGEMENT
+         */
+        function getActiveApiKey() {
+            const provider = localStorage.getItem('api_provider');
+            if (!provider) return { provider: null, key: null };
+            const key = provider === 'gemini' 
+                ? localStorage.getItem('gemini_api_key') 
+                : localStorage.getItem('groq_api_key');
+            return { provider, key };
+        }
+
+        function saveApiKey() {
+            const selectedProvider = document.getElementById('btnSelectGemini').classList.contains('active') ? 'gemini' : 'groq';
+            if (selectedProvider === 'gemini') {
+                const key = document.getElementById('geminiApiKey').value.trim();
+                if (!key.startsWith('AIza')) {
+                    showToast(ERROR_MESSAGES.INVALID_GEMINI_KEY, 'error');
+                    return;
+                }
+                localStorage.setItem('api_provider', 'gemini');
+                localStorage.setItem('gemini_api_key', key);
+            } else {
+                const key = document.getElementById('groqApiKey').value.trim();
+                if (!key.startsWith('gsk_')) {
+                    showToast(ERROR_MESSAGES.INVALID_GROQ_KEY, 'error');
+                    return;
+                }
+                localStorage.setItem('api_provider', 'groq');
+                localStorage.setItem('groq_api_key', key);
+            }
+            updateActiveKeyUI();
+            closeApiKeyModal();
+            showToast('✅ API anahtarı başarıyla kaydedildi!', 'success');
+        }
+
+        function clearApiKeys() {
+            localStorage.removeItem('api_provider');
+            localStorage.removeItem('gemini_api_key');
+            localStorage.removeItem('groq_api_key');
+            document.getElementById('geminiApiKey').value = '';
+            document.getElementById('groqApiKey').value = '';
+            updateActiveKeyUI();
+            showToast('🗑️ API anahtarı silindi! Artık Puter.js kullanılacak.', 'info');
+        }
+
+        function updateActiveKeyUI() {
+            const { provider, key } = getActiveApiKey();
+            const label = document.getElementById('currentProviderLabel');
+            const maskedRow = document.getElementById('maskedKeyRow');
+
+            if (provider && key) {
+                const provName = provider === 'gemini' ? 'Google Gemini API' : 'Groq Cloud API';
+                label.textContent = provName;
+                const masked = key.slice(0, 7) + '...' + key.slice(-4);
+                maskedRow.textContent = `🔑 Kayıtlı Key: ${masked}`;
+                maskedRow.style.display = 'block';
+            } else {
+                label.textContent = 'Puter.js (Varsayılan Ücretsiz)';
+                maskedRow.style.display = 'none';
+            }
+        }
+
+        function openApiKeyModal() {
+            updateActiveKeyUI();
+            const { provider } = getActiveApiKey();
+            if (provider === 'groq') {
+                setProviderUI('groq');
+            } else {
+                setProviderUI('gemini');
+            }
+            document.getElementById('apiKeyModal').classList.add('open');
+        }
+
+        function closeApiKeyModal() {
+            document.getElementById('apiKeyModal').classList.remove('open');
+        }
+
+        function setProviderUI(provider) {
+            const btnGemini = document.getElementById('btnSelectGemini');
+            const btnGroq = document.getElementById('btnSelectGroq');
+            const secGemini = document.getElementById('geminiInputSection');
+            const secGroq = document.getElementById('groqInputSection');
+
+            if (provider === 'gemini') {
+                btnGemini.classList.add('active');
+                btnGroq.classList.remove('active');
+                secGemini.style.display = 'block';
+                secGroq.style.display = 'none';
+            } else {
+                btnGroq.classList.add('active');
+                btnGemini.classList.remove('active');
+                secGroq.style.display = 'block';
+                secGemini.style.display = 'none';
+            }
+        }
+
+        /**
+         * 5. AI API CALLS & ORCHESTRATION
+         */
+
+        // Katman 1: Puter.js
+        async function analyzeWithPuter(base64Image, updateStatus) {
+            let lastError = null;
+            for (const model of PUTER_MODELS) {
+                try {
+                    if (updateStatus) updateStatus(`Puter.js (${model}) deneniyor...`);
+                    console.log(`Puter.js modeli deneniyor: ${model}`);
+                    const rawResult = await puter.ai.chat(CHESS_ANALYSIS_PROMPT, base64Image, { model });
+                    
+                    // Normalize Puter output if object or string
+                    const resultText = typeof rawResult === 'string' ? rawResult : (rawResult?.message?.content || rawResult?.text || '');
+                    
+                    const refusalPhrases = ["sorry", "can't assist", "cannot assist", "i cannot", "i can't", "unable to", "policy"];
+                    if (resultText && refusalPhrases.some(p => resultText.toLowerCase().includes(p))) {
+                        console.warn(`Model ${model} isteği reddetti.`);
+                        continue;
+                    }
+                    if (resultText && resultText.length > 5) {
+                        return resultText;
+                    }
+                } catch (err) {
+                    console.warn(`Model ${model} hatası:`, err);
+                    lastError = err;
+                }
+            }
+            throw lastError || new Error('PUTER_FAILED');
+        }
+
+        // Katman 2A: Google Gemini API
+        async function analyzeWithGemini(base64Image, apiKey) {
+            const cleanBase64 = base64Image.includes(',') ? base64Image.split(',')[1] : base64Image;
+            const mimeType = base64Image.includes(';') ? base64Image.split(';')[0].replace('data:', '') : 'image/jpeg';
+
+            const response = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [
+                                { text: CHESS_ANALYSIS_PROMPT },
+                                {
+                                    inlineData: {
+                                        mimeType: mimeType || "image/jpeg",
+                                        data: cleanBase64
+                                    }
+                                }
+                            ]
+                        }]
+                    })
+                }
+            );
+
+            const data = await response.json();
+            if (!response.ok) {
+                if (response.status === 429) throw new Error('GEMINI_QUOTA');
+                throw new Error(data.error?.message || 'Gemini API Hatası');
+            }
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        }
+
+        // Katman 2B: Groq Cloud API
+        async function analyzeWithGroq(base64Image, apiKey) {
+            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: GROQ_MODEL,
+                    messages: [{
+                        role: 'user',
+                        content: [
+                            { type: 'text', text: CHESS_ANALYSIS_PROMPT },
+                            { type: 'image_url', image_url: { url: base64Image } }
+                        ]
+                    }],
+                    temperature: 0.1,
+                    max_tokens: 2500
+                })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                if (response.status === 429) throw new Error('GROQ_QUOTA');
+                throw new Error(data.error?.message || 'Groq API Hatası');
+            }
+            return data.choices?.[0]?.message?.content || '';
+        }
+
+        // Orkestratör
+        async function performAnalysis(base64Image, statusCallback) {
+            const { provider, key } = getActiveApiKey();
+
+            // 1. Manuel girilmiş API Key varsa
+            if (provider && key) {
+                if (statusCallback) statusCallback(`${provider === 'gemini' ? 'Gemini 2.0 Flash' : 'Groq Llama 4 Vision'} ile analiz ediliyor...`);
+                if (provider === 'gemini') return await analyzeWithGemini(base64Image, key);
+                if (provider === 'groq') return await analyzeWithGroq(base64Image, key);
+            }
+
+            // 2. Puter.js dene
+            try {
+                return await analyzeWithPuter(base64Image, statusCallback);
+            } catch (error) {
+                console.error("Puter analizi başarısız:", error);
+                openApiKeyModal();
+                throw new Error('PUTER_FAILED');
+            }
+        }
+
+        /**
+         * 6. PGN PARSING & CHESS.JS VALIDATION
+         */
+        function parsePgnToMovePairs(rawPgn) {
+            let text = rawPgn || '';
+            text = text.replace(/```[a-z]*
+?/gi, '').replace(/```/g, '');
+            
+            // Extract PGN Header Tags if AI included metadata
+            const tagRegex = /\[(\w+)\s+"(.*?)"\]/g;
+            let tagMatch;
+            while ((tagMatch = tagRegex.exec(text)) !== null) {
+                const tagName = tagMatch[1].toLowerCase();
+                const tagVal = tagMatch[2];
+                if (tagName === 'event' && !AppState.metadata.event) AppState.metadata.event = tagVal;
+                else if (tagName === 'site' && !AppState.metadata.site) AppState.metadata.site = tagVal;
+                else if (tagName === 'date' && !AppState.metadata.date) AppState.metadata.date = tagVal;
+                else if (tagName === 'round' && !AppState.metadata.round) AppState.metadata.round = tagVal;
+                else if (tagName === 'white' && !AppState.metadata.white) AppState.metadata.white = tagVal;
+                else if (tagName === 'black' && !AppState.metadata.black) AppState.metadata.black = tagVal;
+                else if (tagName === 'whiteelo' && !AppState.metadata.whiteElo) AppState.metadata.whiteElo = tagVal;
+                else if (tagName === 'blackelo' && !AppState.metadata.blackElo) AppState.metadata.blackElo = tagVal;
+                else if (tagName === 'result') AppState.gameResult = tagVal;
+            }
+
+            // Strip PGN headers, annotations and variations
+            text = text.replace(/\[.*?\]/g, ' ');
+            text = text.replace(/\{.*?\}/g, ' ');
+            text = text.replace(/\(.*?\)/g, ' ');
+
+            // Match trailing result
+            const resultMatch = text.match(/(1-0|0-1|1\/2-1\/2|\*)\s*$/);
+            if (resultMatch) {
+                AppState.gameResult = resultMatch[1];
+                text = text.slice(0, resultMatch.index).trim();
+            }
+
+            // Discard conversational AI preamble text before first move "1."
+            const firstMoveIdx = text.search(/(?:^|\s)1\s*\.\s*[a-zA-ZŞşVvKkFfAa]/);
+            if (firstMoveIdx !== -1) {
+                text = text.slice(firstMoveIdx).trim();
+            } else {
+                const fallbackIdx = text.search(/(?:^|\s)1\s*\./);
+                if (fallbackIdx !== -1) {
+                    text = text.slice(fallbackIdx).trim();
+                }
+            }
+
+            const tokens = text.trim().split(/\s+/);
+            const movePairs = [];
+            let currentPair = null;
+
+            for (let i = 0; i < tokens.length; i++) {
+                let token = tokens[i].trim();
+                if (!token) continue;
+
+                if (['1-0', '0-1', '1/2-1/2', '*'].includes(token)) {
+                    AppState.gameResult = token;
+                    continue;
+                }
+
+                // Move number "1." or "1..."
+                const moveNumMatch = token.match(/^(\d+)\.+$/);
+                if (moveNumMatch) {
+                    const num = parseInt(moveNumMatch[1], 10);
+                    if (currentPair && !currentPair.white && !currentPair.black) {
+                        currentPair.number = num;
+                    } else {
+                        currentPair = { number: num, white: '', black: '', whiteUncertain: false, blackUncertain: false };
+                        movePairs.push(currentPair);
+                    }
+                    continue;
+                }
+
+                // Attached move number "1.e4"
+                const attachedMatch = token.match(/^(\d+)\.+(.+)$/);
+                if (attachedMatch) {
+                    const num = parseInt(attachedMatch[1], 10);
+                    if (currentPair && !currentPair.white && !currentPair.black) {
+                        currentPair.number = num;
+                    } else if (!currentPair || currentPair.white) {
+                        currentPair = { number: num, white: '', black: '', whiteUncertain: false, blackUncertain: false };
+                        movePairs.push(currentPair);
+                    }
+                    token = attachedMatch[2];
+                }
+
+                let isUncertain = false;
+                if (token.includes('[?]')) {
+                    isUncertain = true;
+                    token = token.replace(/\[\?\]/g, '');
+                } else if (token === '?' || token === '??') {
+                    if (currentPair) {
+                        if (currentPair.black) currentPair.blackUncertain = true;
+                        else if (currentPair.white) currentPair.whiteUncertain = true;
+                    }
+                    continue;
+                }
+
+                token = token.replace(/[^\wŞşIıİiÖöÜüĞğÇç\+\#\=\-\/]/g, '');
+                if (!token) continue;
+
+                if (!currentPair) {
+                    currentPair = { number: movePairs.length + 1, white: '', black: '', whiteUncertain: false, blackUncertain: false };
+                    movePairs.push(currentPair);
+                }
+
+                if (!currentPair.white) {
+                    currentPair.white = token;
+                    currentPair.whiteUncertain = isUncertain;
+                } else if (!currentPair.black) {
+                    currentPair.black = token;
+                    currentPair.blackUncertain = isUncertain;
+                    currentPair = null;
+                } else {
+                    currentPair = { number: movePairs.length + 1, white: token, black: '', whiteUncertain: isUncertain, blackUncertain: false };
+                    movePairs.push(currentPair);
+                }
+            }
+
+            if (movePairs.length === 0) {
+                movePairs.push({ number: 1, white: '', black: '', whiteUncertain: false, blackUncertain: false });
+            }
+
+            return movePairs;
+        }
+
+        // Live validation using chess.js 0.10.3
+        function validateAllMoves(pairs) {
+            const chess = new Chess();
+            const validated = [];
+
+            for (let i = 0; i < pairs.length; i++) {
+                const p = pairs[i];
+                const item = {
+                    number: i + 1,
+                    white: p.white || '',
+                    black: p.black || '',
+                    whiteValid: true,
+                    blackValid: true,
+                    whiteUncertain: p.whiteUncertain || false,
+                    blackUncertain: p.blackUncertain || false,
+                    whiteError: '',
+                    blackError: ''
+                };
+
+                // Validate White Move
+                if (item.white) {
+                    const enWhite = sanToEnglish(item.white);
+                    try {
+                        const m = chess.move(enWhite, { sloppy: true });
+                        if (!m) {
+                            item.whiteValid = false;
+                            item.whiteError = 'Geçersiz hamle';
+                        }
+                    } catch (e) {
+                        item.whiteValid = false;
+                        item.whiteError = e.message || 'Geçersiz';
+                    }
+                }
+
+                // Validate Black Move
+                if (item.black) {
+                    const enBlack = sanToEnglish(item.black);
+                    try {
+                        const m = chess.move(enBlack, { sloppy: true });
+                        if (!m) {
+                            item.blackValid = false;
+                            item.blackError = 'Geçersiz hamle';
+                        }
+                    } catch (e) {
+                        item.blackValid = false;
+                        item.blackError = e.message || 'Geçersiz';
+                    }
+                }
+
+                validated.push(item);
+            }
+
+            return validated;
+        }
+
+        /**
+         * 7. UI RENDERING & EVENT HANDLING
+         */
+        function renderMovesTable() {
+            const container = document.getElementById('movesListContainer');
+            container.innerHTML = '';
+
+            const validatedList = validateAllMoves(AppState.movePairs);
+            let totalMoves = 0;
+            let invalidCount = 0;
+
+            validatedList.forEach((item, index) => {
+                if (item.white) totalMoves++;
+                if (item.black) totalMoves++;
+                if (!item.whiteValid || !item.blackValid) invalidCount++;
+
+                const row = document.createElement('div');
+                row.className = 'move-row';
+                row.dataset.index = index;
+
+                // Turkish SAN for inputs
+                const whiteVal = sanToTurkish(item.white);
+                const blackVal = sanToTurkish(item.black);
+
+                // White classes & badges
+                let whiteClass = 'move-input';
+                let whiteBadgeHtml = '';
+                if (item.white) {
+                    if (!item.whiteValid) {
+                        whiteClass += ' invalid';
+                        whiteBadgeHtml = '<span class="move-badge badge-invalid">⚠️ Geçersiz</span>';
+                    } else if (item.whiteUncertain) {
+                        whiteClass += ' uncertain';
+                        whiteBadgeHtml = '<span class="move-badge badge-uncertain">❓ Şüpheli</span>';
+                    } else {
+                        whiteClass += ' valid';
+                    }
+                }
+
+                // Black classes & badges
+                let blackClass = 'move-input';
+                let blackBadgeHtml = '';
+                if (item.black) {
+                    if (!item.blackValid) {
+                        blackClass += ' invalid';
+                        blackBadgeHtml = '<span class="move-badge badge-invalid">⚠️ Geçersiz</span>';
+                    } else if (item.blackUncertain) {
+                        blackClass += ' uncertain';
+                        blackBadgeHtml = '<span class="move-badge badge-uncertain">❓ Şüpheli</span>';
+                    } else {
+                        blackClass += ' valid';
+                    }
+                }
+
+                row.innerHTML = `
+                    <div class="move-num">${item.number}.</div>
+                    <div class="move-input-wrap">
+                        <input type="text" class="${whiteClass}" value="${whiteVal}" placeholder="e4, Af3..." data-type="white" data-index="${index}" spellcheck="false" autocomplete="off">
+                        ${whiteBadgeHtml}
+                    </div>
+                    <div class="move-input-wrap">
+                        <input type="text" class="${blackClass}" value="${blackVal}" placeholder="e5, Ac6..." data-type="black" data-index="${index}" spellcheck="false" autocomplete="off">
+                        ${blackBadgeHtml}
+                    </div>
+                    <button class="btn-delete-row" data-index="${index}" title="Bu satırı sil" type="button">🗑️</button>
+                `;
+
+                container.appendChild(row);
+            });
+
+            // Update stats
+            const statsEl = document.getElementById('movesStatsText');
+            statsEl.textContent = `${totalMoves} hamle (${validatedList.length} tur)` + (invalidCount > 0 ? ` • ⚠️ ${invalidCount} geçersiz satır` : ' • ✅ Doğrulandı');
+            statsEl.style.color = invalidCount > 0 ? 'var(--warning)' : 'var(--accent)';
+        }
+
+        // Sync inputs back to AppState on blur or change
+        function handleMoveInputChange(e) {
+            const input = e.target;
+            const index = parseInt(input.dataset.index, 10);
+            const type = input.dataset.type;
+            if (isNaN(index) || !type) return;
+
+            const val = input.value.trim();
+            if (type === 'white') {
+                AppState.movePairs[index].white = val;
+                AppState.movePairs[index].whiteUncertain = false;
+            } else if (type === 'black') {
+                AppState.movePairs[index].black = val;
+                AppState.movePairs[index].blackUncertain = false;
+            }
+
+            renderMovesTable();
+        }
+
+        function deleteMoveRow(index) {
+            if (AppState.movePairs.length <= 1) {
+                AppState.movePairs = [{ number: 1, white: '', black: '', whiteUncertain: false, blackUncertain: false }];
+            } else {
+                AppState.movePairs.splice(index, 1);
+                AppState.movePairs.forEach((p, idx) => p.number = idx + 1);
+            }
+            renderMovesTable();
+        }
+
+        function addMoveRow() {
+            const nextNum = AppState.movePairs.length + 1;
+            AppState.movePairs.push({
+                number: nextNum,
+                white: '',
+                black: '',
+                whiteUncertain: false,
+                blackUncertain: false
+            });
+            renderMovesTable();
+            const container = document.getElementById('movesListContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        /**
+         * 8. PGN GENERATION & EXPORT
+         */
+        function generateFinalPgn() {
+            const meta = {
+                event: document.getElementById('metaEvent').value.trim() || '?',
+                site: document.getElementById('metaSite').value.trim() || '?',
+                date: document.getElementById('metaDate').value.replace(/-/g, '.') || new Date().toISOString().slice(0, 10).replace(/-/g, '.'),
+                round: document.getElementById('metaRound').value.trim() || '?',
+                white: document.getElementById('metaWhite').value.trim() || 'Beyaz',
+                black: document.getElementById('metaBlack').value.trim() || 'Siyah',
+                whiteElo: document.getElementById('metaWhiteElo').value.trim() || '',
+                blackElo: document.getElementById('metaBlackElo').value.trim() || '',
+                result: document.getElementById('metaResult').value || AppState.gameResult || '*'
+            };
+
+            let pgnHeaders = `[Event "${meta.event}"]
+[Site "${meta.site}"]
+[Date "${meta.date}"]
+[Round "${meta.round}"]
+[White "${meta.white}"]
+[Black "${meta.black}"]
+`;
+            if (meta.whiteElo) pgnHeaders += `[WhiteElo "${meta.whiteElo}"]
+`;
+            if (meta.blackElo) pgnHeaders += `[BlackElo "${meta.blackElo}"]
+`;
+            pgnHeaders += `[Result "${meta.result}"]
+
+`;
+
+            // Build English move text
+            const chess = new Chess();
+            const moveTokens = [];
+
+            AppState.movePairs.forEach((p, idx) => {
+                const moveNum = idx + 1;
+                const enWhite = sanToEnglish(p.white);
+                const enBlack = sanToEnglish(p.black);
+
+                if (enWhite) {
+                    let whiteSan = enWhite;
+                    try {
+                        const m = chess.move(enWhite, { sloppy: true });
+                        if (m) whiteSan = m.san;
+                    } catch (e) {}
+                    moveTokens.push(`${moveNum}. ${whiteSan}`);
+                }
+
+                if (enBlack) {
+                    let blackSan = enBlack;
+                    try {
+                        const m = chess.move(enBlack, { sloppy: true });
+                        if (m) blackSan = m.san;
+                    } catch (e) {}
+                    moveTokens.push(blackSan);
+                }
+            });
+
+            if (meta.result && meta.result !== '*') {
+                moveTokens.push(meta.result);
+            }
+
+            const pgnBody = moveTokens.join(' ');
+            AppState.finalPgn = pgnHeaders + pgnBody;
+            return AppState.finalPgn;
+        }
+
+        // Export Actions
+        function copyPgnToClipboard() {
+            if (!AppState.finalPgn) return;
+            navigator.clipboard.writeText(AppState.finalPgn).then(() => {
+                showToast('📋 PGN panoya kopyalandı!', 'success');
+            }).catch(() => {
+                showToast(ERROR_MESSAGES.EXPORT_ERROR, 'error');
+            });
+        }
+
+        function downloadPgnFile() {
+            if (!AppState.finalPgn) return;
+            const blob = new Blob([AppState.finalPgn], { type: 'application/x-chess-pgn;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const dateStr = new Date().toISOString().slice(0, 10);
+            a.download = `satranc_notasyon_${dateStr}.pgn`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('📥 PGN dosyası indirildi!', 'success');
+        }
+
+        async function downloadPgnPng() {
+            const area = document.getElementById('pgnExportArea');
+            if (!area) return;
+
+            try {
+                showToast('🖼️ PNG görseli hazırlanıyor...', 'info', 1500);
+                const canvas = await html2canvas(area, {
+                    backgroundColor: '#0a0a1a',
+                    scale: 2,
+                    logging: false
+                });
+
+                const link = document.createElement('a');
+                link.download = `satranc_notasyon_${new Date().toISOString().slice(0, 10)}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast('🖼️ PNG görseli kaydedildi!', 'success');
+            } catch (err) {
+                console.error('PNG export error:', err);
+                showToast(ERROR_MESSAGES.EXPORT_ERROR, 'error');
+            }
+        }
+
+        function openInLichess() {
+            if (!AppState.finalPgn) return;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://lichess.org/api/import';
+            form.target = '_blank';
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'pgn';
+            input.value = AppState.finalPgn;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+
+        /**
+         * 9. INITIALIZATION & EVENT LISTENERS
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewImage');
+            const previewInfo = document.getElementById('previewInfo');
+            const btnAnalyze = document.getElementById('btnAnalyze');
+            const btnChangePhoto = document.getElementById('btnChangePhoto');
+            const statusBox = document.getElementById('statusBox');
+            const statusText = document.getElementById('statusText');
+
+            // Lightbox Elements
+            const lightboxModal = document.getElementById('lightboxModal');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const btnCloseLightbox = document.getElementById('btnCloseLightbox');
+            const stickyImage = document.getElementById('stickyImage');
+            const stickyPhotoWrap = document.getElementById('stickyPhotoWrap');
+
+            // Modal Elements
+            const btnOpenApiModal = document.getElementById('btnOpenApiModal');
+            const btnCloseApiModal = document.getElementById('btnCloseApiModal');
+            const btnSelectGemini = document.getElementById('btnSelectGemini');
+            const btnSelectGroq = document.getElementById('btnSelectGroq');
+            const btnSaveApiKey = document.getElementById('btnSaveApiKey');
+            const btnClearApiKey = document.getElementById('btnClearApiKey');
+
+            // Stage 2 & 3 Elements
+            const btnAddMoveRow = document.getElementById('btnAddMoveRow');
+            const movesListContainer = document.getElementById('movesListContainer');
+            const btnConfirmMoves = document.getElementById('btnConfirmMoves');
+            const btnBackToStage1 = document.getElementById('btnBackToStage1');
+            const btnCopyPgn = document.getElementById('btnCopyPgn');
+            const btnDownloadPgn = document.getElementById('btnDownloadPgn');
+            const btnDownloadPng = document.getElementById('btnDownloadPng');
+            const btnOpenLichess = document.getElementById('btnOpenLichess');
+            const btnNewAnalysis = document.getElementById('btnNewAnalysis');
+
+            // Accordion
+            const accordionHeader = document.getElementById('accordionHeader');
+            const accordionContent = document.getElementById('accordionContent');
+            const accordionArrow = document.getElementById('accordionArrow');
+
+            // Setup default date to today
+            document.getElementById('metaDate').value = new Date().toISOString().slice(0, 10);
+
+            // File selection handler
+            function handleFile(file) {
+                if (!file) return;
+                AppState.selectedFile = file;
+                const fileSizeMb = (file.size / (1024 * 1024)).toFixed(2);
+                previewInfo.textContent = `${file.name} (${fileSizeMb} MB)`;
+
+                fileToBase64(file).then(base64 => {
+                    AppState.base64Image = base64;
+                    previewImage.src = base64;
+                    stickyImage.src = base64;
+                    lightboxImage.src = base64;
+                    previewContainer.style.display = 'block';
+                    dropZone.style.display = 'none';
+                    btnAnalyze.disabled = false;
+                }).catch(err => {
+                    console.error("Base64 error:", err);
+                    showToast('Fotoğraf yüklenirken bir hata oluştu.', 'error');
+                });
+            }
+
+            // Dropzone drag & drop
+            dropZone.addEventListener('click', () => fileInput.click());
+            btnChangePhoto.addEventListener('click', () => {
+                fileInput.value = '';
+                dropZone.style.display = 'block';
+                previewContainer.style.display = 'none';
+                btnAnalyze.disabled = true;
+                AppState.base64Image = null;
+                AppState.selectedFile = null;
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('dragover');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            // Lightbox triggers
+            previewImage.addEventListener('click', () => lightboxModal.classList.add('open'));
+            stickyPhotoWrap.addEventListener('click', () => lightboxModal.classList.add('open'));
+            btnCloseLightbox.addEventListener('click', () => lightboxModal.classList.remove('open'));
+            lightboxModal.addEventListener('click', (e) => {
+                if (e.target === lightboxModal) lightboxModal.classList.remove('open');
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    lightboxModal.classList.remove('open');
+                    document.getElementById('apiKeyModal').classList.remove('open');
+                }
+            });
+
+            // Accordion toggle
+            accordionHeader.addEventListener('click', () => {
+                const isOpen = accordionContent.classList.toggle('open');
+                accordionArrow.textContent = isOpen ? '▲' : '▼';
+            });
+
+            // API Modal triggers
+            btnOpenApiModal.addEventListener('click', openApiKeyModal);
+            btnCloseApiModal.addEventListener('click', closeApiKeyModal);
+            btnSelectGemini.addEventListener('click', () => setProviderUI('gemini'));
+            btnSelectGroq.addEventListener('click', () => setProviderUI('groq'));
+            btnSaveApiKey.addEventListener('click', saveApiKey);
+            btnClearApiKey.addEventListener('click', clearApiKeys);
+
+            // Analyze Button Action
+            btnAnalyze.addEventListener('click', async () => {
+                if (!AppState.base64Image) {
+                    showToast(ERROR_MESSAGES.NO_IMAGE, 'warning');
+                    return;
+                }
+
+                btnAnalyze.disabled = true;
+                statusBox.classList.add('active');
+                statusText.textContent = 'Analiz başlatılıyor...';
+
+                try {
+                    const rawResult = await performAnalysis(AppState.base64Image, (msg) => {
+                        statusText.textContent = msg;
+                    });
+
+                    console.log("AI Ham Çıktısı:
+", rawResult);
+
+                    // Parse AI Result to Move Pairs & Metadata
+                    const parsedPairs = parsePgnToMovePairs(rawResult);
+                    AppState.movePairs = parsedPairs;
+
+                    // Sync metadata to form if extracted from scoresheet
+                    if (AppState.metadata.event) document.getElementById('metaEvent').value = AppState.metadata.event;
+                    if (AppState.metadata.site) document.getElementById('metaSite').value = AppState.metadata.site;
+                    if (AppState.metadata.date) document.getElementById('metaDate').value = AppState.metadata.date.replace(/\./g, '-');
+                    if (AppState.metadata.round) document.getElementById('metaRound').value = AppState.metadata.round;
+                    if (AppState.metadata.white) document.getElementById('metaWhite').value = AppState.metadata.white;
+                    if (AppState.metadata.black) document.getElementById('metaBlack').value = AppState.metadata.black;
+                    if (AppState.metadata.whiteElo) document.getElementById('metaWhiteElo').value = AppState.metadata.whiteElo;
+                    if (AppState.metadata.blackElo) document.getElementById('metaBlackElo').value = AppState.metadata.blackElo;
+                    if (AppState.gameResult) document.getElementById('metaResult').value = AppState.gameResult;
+
+                    renderMovesTable();
+                    showStage(2);
+                    showToast('✅ Notasyon başarıyla okundu! Lütfen kontrol ediniz.', 'success');
+                } catch (error) {
+                    console.error("Analiz hatası:", error);
+                    const msgKey = error.message;
+                    const errorMsg = ERROR_MESSAGES[msgKey] || ERROR_MESSAGES.ANALYSIS_FAILED;
+                    showToast(errorMsg, 'error', 5000);
+                } finally {
+                    btnAnalyze.disabled = false;
+                    statusBox.classList.remove('active');
+                }
+            });
+
+            // Move List Events (Delegation)
+            movesListContainer.addEventListener('change', handleMoveInputChange);
+
+            // Keyboard navigation (Enter moves to next cell)
+            movesListContainer.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const input = e.target;
+                    const index = parseInt(input.dataset.index, 10);
+                    const type = input.dataset.type;
+                    if (isNaN(index)) return;
+
+                    if (type === 'white') {
+                        const blackInput = movesListContainer.querySelector(`input[data-type="black"][data-index="${index}"]`);
+                        if (blackInput) blackInput.focus();
+                    } else if (type === 'black') {
+                        if (index === AppState.movePairs.length - 1) {
+                            addMoveRow();
+                        }
+                        const nextWhiteInput = movesListContainer.querySelector(`input[data-type="white"][data-index="${index + 1}"]`);
+                        if (nextWhiteInput) nextWhiteInput.focus();
+                    }
+                }
+            });
+
+            movesListContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('btn-delete-row')) {
+                    const index = parseInt(e.target.dataset.index, 10);
+                    deleteMoveRow(index);
+                }
+            });
+
+            btnAddMoveRow.addEventListener('click', addMoveRow);
+
+            // Confirm Moves -> Stage 3
+            btnConfirmMoves.addEventListener('click', () => {
+                const finalPgn = generateFinalPgn();
+                document.getElementById('pgnExportArea').textContent = finalPgn;
+
+                const validMoves = AppState.movePairs.filter(p => p.white || p.black);
+                document.getElementById('exportSummaryText').textContent = 
+                    `Toplam ${validMoves.length} tur tamamlandı. Standart FIDE PGN formatına dönüştürüldü.`;
+
+                showStage(3);
+            });
+
+            // Back to Stage 1
+            btnBackToStage1.addEventListener('click', () => {
+                showStage(1);
+            });
+
+            // Export Buttons
+            btnCopyPgn.addEventListener('click', copyPgnToClipboard);
+            btnDownloadPgn.addEventListener('click', downloadPgnFile);
+            btnDownloadPng.addEventListener('click', downloadPgnPng);
+            btnOpenLichess.addEventListener('click', openInLichess);
+            btnNewAnalysis.addEventListener('click', () => {
+                fileInput.value = '';
+                dropZone.style.display = 'block';
+                previewContainer.style.display = 'none';
+                btnAnalyze.disabled = true;
+                AppState.selectedFile = null;
+                AppState.base64Image = null;
+                AppState.movePairs = [];
+                AppState.finalPgn = '';
+                showStage(1);
+            });
+
+            // Initial UI updates
+            updateActiveKeyUI();
+        });
+    </script>
+</body>
+</html>
